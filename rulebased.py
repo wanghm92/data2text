@@ -3,7 +3,7 @@ import codecs, json
 
 first_line = "The %s ( %d - %d ) defeated the %s ( %d - %d ) %d - %d ."
 player_line = "%s scored %d points ( %d - %d FG , %d - %d 3Pt , %d - %d FT ) to go with %d rebounds ."
-last_line = "The %s ' next game will be at home against the Dallas Mavericks , while the %s will travel to play the Bulls ."
+# last_line = "The %s ' next game will be at home against the Dallas Mavericks , while the %s will travel to play the Bulls ."
 
 def get_line_info(line):
     city = line["TEAM-CITY"]
@@ -43,7 +43,7 @@ def rule_gen2(entry, k=6):
     k_best = get_best_players(entry["box_score"], k)
     for player_tup in k_best:
         summ.append(player_line % (player_tup))
-    summ.append(last_line % (vis_name, home_name))
+    # summ.append(last_line % (vis_name, home_name))
     return " ".join(summ)
 
 def rule_gen(entry, k=6):
@@ -60,7 +60,7 @@ def rule_gen(entry, k=6):
     k_best = get_best_players(entry["box_score"], k)
     for player_tup in k_best:
         summ.append(player_line % (player_tup))
-    summ.append(last_line % (vis_name, home_name))
+    # summ.append(last_line % (vis_name, home_name))
     return " ".join(summ)
 
 def doit(inp_file, out_file):

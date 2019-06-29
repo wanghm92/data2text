@@ -499,15 +499,54 @@ def prep_generated_data(genfile, dict_pfx, outfile, path="../boxscore-data/rotow
 
 ################################################################################
 
-bs_keys = ["PLAYER-PLAYER_NAME", "PLAYER-START_POSITION", "PLAYER-MIN", "PLAYER-PTS",
-     "PLAYER-FGM", "PLAYER-FGA", "PLAYER-FG_PCT", "PLAYER-FG3M", "PLAYER-FG3A",
-     "PLAYER-FG3_PCT", "PLAYER-FTM", "PLAYER-FTA", "PLAYER-FT_PCT", "PLAYER-OREB",
-     "PLAYER-DREB", "PLAYER-REB", "PLAYER-AST", "PLAYER-TO", "PLAYER-STL", "PLAYER-BLK",
-     "PLAYER-PF", "PLAYER-FIRST_NAME", "PLAYER-SECOND_NAME"]
+# bs_keys = ["PLAYER-PLAYER_NAME", "PLAYER-START_POSITION", "PLAYER-MIN", "PLAYER-PTS",
+#      "PLAYER-FGM", "PLAYER-FGA", "PLAYER-FG_PCT", "PLAYER-FG3M", "PLAYER-FG3A",
+#      "PLAYER-FG3_PCT", "PLAYER-FTM", "PLAYER-FTA", "PLAYER-FT_PCT", "PLAYER-OREB",
+#      "PLAYER-DREB", "PLAYER-REB", "PLAYER-AST", "PLAYER-TO", "PLAYER-STL", "PLAYER-BLK",
+#      "PLAYER-PF", "PLAYER-FIRST_NAME", "PLAYER-SECOND_NAME"]
+#
+# ls_keys = ["TEAM-PTS_QTR1", "TEAM-PTS_QTR2", "TEAM-PTS_QTR3", "TEAM-PTS_QTR4",
+#     "TEAM-PTS", "TEAM-FG_PCT", "TEAM-FG3_PCT", "TEAM-FT_PCT", "TEAM-REB",
+#     "TEAM-AST", "TEAM-TOV", "TEAM-WINS", "TEAM-LOSSES", "TEAM-CITY", "TEAM-NAME"]
 
-ls_keys = ["TEAM-PTS_QTR1", "TEAM-PTS_QTR2", "TEAM-PTS_QTR3", "TEAM-PTS_QTR4",
-    "TEAM-PTS", "TEAM-FG_PCT", "TEAM-FG3_PCT", "TEAM-FT_PCT", "TEAM-REB",
-    "TEAM-AST", "TEAM-TOV", "TEAM-WINS", "TEAM-LOSSES", "TEAM-CITY", "TEAM-NAME"]
+# tmp = [
+#     "PLAYER_NAME", "START_POSITION", "MIN", "PTS", "FGM", "FGA",
+#     "FG_PCT", "FG3M", "FG3A", "FG3_PCT", "FTM", "FTA", "FT_PCT", "OREB",
+#     "DREB", "REB", "AST", "TO", "STL", "BLK", "PF",
+#     "DUMMY0", "DUMMY1", "DUMMY2", "DUMMY3", "DUMMY4", "DUMMY5", "DUMMY6",
+#     "DUMMY7", "DUMMY8", "DUMMY9", "DUMMY10", "DUMMY11", "DUMMY12", "DUMMY13",
+#     "DUMMY14", "DUMMY15", "DUMMY16", "DUMMY17",
+#     "FIRST_NAME", "SECOND_NAME"
+# ]
+
+tmp = [
+    "PLAYER_NAME", "START_POSITION", "MIN", "PTS", "FGM", "FGA",
+    "FG_PCT", "FG3M", "FG3A", "FG3_PCT", "FTM", "FTA", "FT_PCT", "OREB",
+    "DREB", "REB", "AST", "TO", "STL", "BLK", "PF",
+    "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>",
+    "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>",
+    "FIRST_NAME", "SECOND_NAME"
+]
+
+bs_keys = []
+for x in tmp:
+    bs_keys.append('PLAYER-{}'.format(x))
+
+ls_keys = [
+    'TEAM-ALIAS', 'TEAM-ARENA',
+    'TEAM-PTS',
+    'TEAM-PTS_HALF-FIRST', 'TEAM-PTS_HALF-SECOND', 'TEAM-PTS_HALF_DIFF-FIRST', 'TEAM-PTS_HALF_DIFF-SECOND',
+    'TEAM-PTS_QTR1', 'TEAM-PTS_QTR2', 'TEAM-PTS_QTR3', 'TEAM-PTS_QTR4',
+    'TEAM-PTS_QTR-1to3', 'TEAM-PTS_QTR-2to4',
+    'TEAM-PTS_QTR_DIFF-FIRST', 'TEAM-PTS_QTR_DIFF-SECOND', 'TEAM-PTS_QTR_DIFF-THIRD', 'TEAM-PTS_QTR_DIFF-FOURTH',
+    'TEAM-PTS_SUM-BENCH', 'TEAM-PTS_SUM-START', 'TEAM-PTS_TOTAL_DIFF',
+    'TEAM-FG3A', 'TEAM-FG3M', 'TEAM-FG3_PCT', 'TEAM-FGA', 'TEAM-FGM', 'TEAM-FG_PCT',
+    'TEAM-FTA', 'TEAM-FTM', 'TEAM-FT_PCT',
+    'TEAM-REB', 'TEAM-OREB', 'TEAM-DREB',
+    'TEAM-AST', 'TEAM-BLK', 'TEAM-STL', 'TEAM-TOV',
+    'TEAM-WINS', 'TEAM-LOSSES',
+    'TEAM-CITY', 'TEAM-NAME',
+]
 
 NUM_PLAYERS = 13
 

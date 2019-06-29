@@ -258,8 +258,8 @@ end
 
 local function beamGen(model, data, tgtDict)
   -- adapted from Translator:translateBatch()
-  local max_sent_length = 1500
-  print("using max len:", 1500)
+  local max_sent_length = 350
+  print("using max len:", 350)
   allEvaluate(model)
   local outFile = io.open(opt.gen_file, 'w')
   for i = 1, data:batchCount() do
@@ -279,7 +279,7 @@ local function beamGen(model, data, tgtDict)
     for b = 1, batch.size do
         local top1 = results[b][1].tokens
         local top1tostr = convert_and_shorten_string(top1, #top1, tgtDict)
-        print(top1tostr)
+        -- print(top1tostr)
         outFile:write(top1tostr, '\n')
     end
   end
@@ -447,9 +447,9 @@ local function trainModel(model, trainData, validData, dataset, info)
             end
         end
 
+        checkpoint:saveEpoch(validPpl, epochState, not opt.json_log)
         if validPpl < bestPpl then
-            checkpoint:deleteEpoch(bestPpl, bestEpoch)
-            checkpoint:saveEpoch(validPpl, epochState, not opt.json_log)
+            --checkpoint:deleteEpoch(bestPpl, bestEpoch)
             bestPpl = validPpl
             bestEpoch = epoch
         end
@@ -486,7 +486,8 @@ local function main()
   g_nRegRows = #dataset.train.src.words/2 - 1 -- two teams and nRegRows players
   assert(g_nRegRows == 13)
   g_nCols = dataset.train.src.words[1][1]:size(1) - 1 -- leave off first b/c it's the row name
-  assert(g_nCols == 22)
+  --print(g_nCols)
+  assert(g_nCols == 40)
   g_specPadding = g_nCols -- assume last real column is the row name for special (i.e., team) rows
   g_nFeatures = 4
 

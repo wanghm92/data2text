@@ -44,14 +44,46 @@ local function hasFeatures(filename)
   return numFeatures > 0
 end
 
-local bs_keys = {"PLAYER_NAME", "START_POSITION", "MIN", "PTS", "FGM", "FGA",
-     "FG_PCT", "FG3M", "FG3A", "FG3_PCT", "FTM", "FTA", "FT_PCT", "OREB",
-     "DREB", "REB", "AST", "TO", "STL", "BLK", "PF", "FIRST_NAME",
-     "SECOND_NAME"}
+--local bs_keys = {"PLAYER_NAME", "START_POSITION", "MIN", "PTS", "FGM", "FGA",
+--     "FG_PCT", "FG3M", "FG3A", "FG3_PCT", "FTM", "FTA", "FT_PCT", "OREB",
+--     "DREB", "REB", "AST", "TO", "STL", "BLK", "PF", "FIRST_NAME",
+--     "SECOND_NAME"}
+--
+--local ls_keys = {"TEAM-PTS_QTR1", "TEAM-PTS_QTR2", "TEAM-PTS_QTR3", "TEAM-PTS_QTR4", "TEAM-PTS",
+--   "TEAM-FG_PCT", "TEAM-FG3_PCT", "TEAM-FT_PCT", "TEAM-REB", "TEAM-AST", "TEAM-TOV", "TEAM-WINS", "TEAM-LOSSES",
+--   "TEAM-CITY", "TEAM-NAME"}
 
-local ls_keys = {"TEAM-PTS_QTR1", "TEAM-PTS_QTR2", "TEAM-PTS_QTR3", "TEAM-PTS_QTR4", "TEAM-PTS",
-   "TEAM-FG_PCT", "TEAM-FG3_PCT", "TEAM-FT_PCT", "TEAM-REB", "TEAM-AST", "TEAM-TOV", "TEAM-WINS", "TEAM-LOSSES",
-   "TEAM-CITY", "TEAM-NAME"}
+
+--local bs_keys = {"PLAYER_NAME", "START_POSITION", "MIN", "PTS", "FGM", "FGA",
+--                 "FG_PCT", "FG3M", "FG3A", "FG3_PCT", "FTM", "FTA", "FT_PCT", "OREB",
+--                 "DREB", "REB", "AST", "TO", "STL", "BLK", "PF",
+--                 "DUMMY0", "DUMMY1", "DUMMY2", "DUMMY3", "DUMMY4", "DUMMY5", "DUMMY6",
+--                 "DUMMY7", "DUMMY8", "DUMMY9", "DUMMY10", "DUMMY11", "DUMMY12", "DUMMY13",
+--                 "DUMMY14", "DUMMY15", "DUMMY16", "DUMMY17",
+--                 "FIRST_NAME", "SECOND_NAME"}
+
+local bs_keys = {"PLAYER_NAME", "START_POSITION", "MIN", "PTS", "FGM", "FGA",
+                 "FG_PCT", "FG3M", "FG3A", "FG3_PCT", "FTM", "FTA", "FT_PCT", "OREB",
+                 "DREB", "REB", "AST", "TO", "STL", "BLK", "PF",
+                 "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>",
+                 "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>", "<blank>",
+                 "FIRST_NAME", "SECOND_NAME"}
+
+local ls_keys = {
+    'TEAM-ALIAS', 'TEAM-ARENA',
+    'TEAM-PTS',
+    'TEAM-PTS_HALF-FIRST', 'TEAM-PTS_HALF-SECOND', 'TEAM-PTS_HALF_DIFF-FIRST', 'TEAM-PTS_HALF_DIFF-SECOND',
+    'TEAM-PTS_QTR1', 'TEAM-PTS_QTR2', 'TEAM-PTS_QTR3', 'TEAM-PTS_QTR4',
+    'TEAM-PTS_QTR-1to3', 'TEAM-PTS_QTR-2to4',
+    'TEAM-PTS_QTR_DIFF-FIRST', 'TEAM-PTS_QTR_DIFF-SECOND', 'TEAM-PTS_QTR_DIFF-THIRD', 'TEAM-PTS_QTR_DIFF-FOURTH',
+    'TEAM-PTS_SUM-BENCH', 'TEAM-PTS_SUM-START', 'TEAM-PTS_TOTAL_DIFF',
+    'TEAM-FG3A', 'TEAM-FG3M', 'TEAM-FG3_PCT', 'TEAM-FGA', 'TEAM-FGM', 'TEAM-FG_PCT',
+    'TEAM-FTA', 'TEAM-FTM', 'TEAM-FT_PCT',
+    'TEAM-REB', 'TEAM-OREB', 'TEAM-DREB',
+    'TEAM-AST', 'TEAM-BLK', 'TEAM-STL', 'TEAM-TOV',
+    'TEAM-WINS', 'TEAM-LOSSES',
+    'TEAM-CITY', 'TEAM-NAME',
+}
 
 -- this will make vocab for every word in summary or in a table cell or header
 local function makeVocabulary(jsondat, size)
@@ -304,7 +336,11 @@ local function makeData(jsondat, srcDicts, tgtDicts, shuffle)
 
           table.insert(home_src, game.home_line[key])
           local homeValIdx = srcDicts.cells:lookup(game.home_line[key])
-          assert(homeValIdx)
+
+          if not homeValIdx and not shuffle then --Validation
+              print("*********** Nonsense **********")
+              homeValIdx = 2
+          end
 
           table.insert(vis_src, game.vis_line[key])
           local visValIdx = srcDicts.cells:lookup(game.vis_line[key])
