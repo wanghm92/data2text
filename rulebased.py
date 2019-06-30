@@ -2,7 +2,7 @@ import sys
 import codecs, json
 
 first_line = "The %s ( %d - %d ) defeated the %s ( %d - %d ) %d - %d ."
-player_line = "%s scored %d points ( %d - %d FG , %d - %d 3Pt , %d - %d FT ) to go with %d rebounds ."
+player_line = "%s scored %d points ( %d - %d FG , %d - %d 3PT , %d - %d FT ) to go with %d rebounds ."
 # last_line = "The %s ' next game will be at home against the Dallas Mavericks , while the %s will travel to play the Bulls ."
 
 def get_line_info(line):
@@ -23,7 +23,7 @@ def get_best_players(bs, k):
     player_tups = []
     for (pid, pts) in player_pts[:k]:
         player_tups.append(
-          (bs["PLAYER_NAME"][pid], int(bs["PTS"][pid]), int(bs["FGM"][pid]), int(bs["FGA"][pid]),
+          ('_'.join(bs["PLAYER_NAME"][pid].split()).replace('.', ''), int(bs["PTS"][pid]), int(bs["FGM"][pid]), int(bs["FGA"][pid]),
           int(bs["FG3M"][pid]), int(bs["FG3A"][pid]), int(bs["FTM"][pid]), int(bs["FTA"][pid]), int(bs["REB"][pid]))
         )
     return player_tups
