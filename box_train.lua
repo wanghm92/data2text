@@ -258,8 +258,8 @@ end
 
 local function beamGen(model, data, tgtDict)
   -- adapted from Translator:translateBatch()
-  local max_sent_length = 350
-  print("using max len:", 350)
+  local max_sent_length = 400
+  print("using max len:", 400)
   allEvaluate(model)
   local outFile = io.open(opt.gen_file, 'w')
   for i = 1, data:batchCount() do
